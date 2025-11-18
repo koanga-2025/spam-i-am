@@ -32,6 +32,36 @@ This project is a playful and engaging web platform designed for SPAM enthusiast
 - **Fan Picture Gallery:** Users can upload their own SPAM-related photos to a community gallery.
 - **Email Newsletter:** Weekly SPAM-themed updates sent to engaged users.
 
+## Tech Stack
+
+### Frontend
+- **React 18** - UI library
+- **TypeScript** - Type-safe JavaScript
+- **Vite** - Build tool and dev server
+- **React Router** - Client-side routing
+- **TanStack Query** - Data fetching and state management
+- **Tailwind CSS** - Utility-first CSS framework
+- **Material UI** - React component library
+- **Auth0** - Authentication
+
+### Backend
+- **Node.js** - JavaScript runtime
+- **Express** - Web framework
+- **TypeScript** - Type-safe JavaScript
+- **Knex.js** - SQL query builder
+- **SQLite3** - Database
+- **JWT** - Authentication tokens
+- **Swagger** - API documentation
+
+### Testing & Development
+- **Vitest** - Unit testing framework
+- **Testing Library** - React testing utilities
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **GitHub Actions** - CI/CD
+
+---
+
 ## Onboarding
 
 1. **Create a Conflict Resolution Plan**
