@@ -1,0 +1,678 @@
+openapi: 3.0.3
+info:
+  title: SPAM-I-AM API
+  description: |
+    A playful web platform for SPAM enthusiasts featuring interactive games,
+    community ratings, comments, and personality quizzes.
+
+    **Authentication**: Protected routes require a Bearer token from Auth0.
+    See the README for instructions on obtaining an access token.
+  version: 1.0.0
+  contact:
+    name: Dev Academy Aotearoa
+    url: https://devacademy.co.nz
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Local development server
+
+tags:
+  - name: About
+    description: About page content and images
+  - name: Comments
+    description: User comments on SPAM flavors
+  - name: Quiz
+    description: Personality quiz questions and results
+  - name: Ratings
+    description: SPAM flavor ratings
+  - name: SPAM
+    description: SPAM flavor management
+  - name: Users
+    description: User management
+
+paths:
+  /about/text:
+    get:
+      tags:
+        - About
+      summary: Get all about page text
+      description: Returns all text content for the about page
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AboutText'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /about/images:
+    get:
+      tags:
+        - About
+      summary: Get all about page images
+      description: Returns all images for the about page
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AboutImage'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /comments/{spamId}:
+    get:
+      tags:
+        - Comments
+      summary: Get comments by SPAM flavor ID
+      description: Returns all comments for a specific SPAM flavor
+      parameters:
+        - name: spamId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The SPAM flavor ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  comments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Comment'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /comments:
+    post:
+      tags:
+        - Comments
+      summary: Add a new comment
+      description: Create a new comment for a SPAM flavor (requires authentication)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - spamId
+                - comment
+              properties:
+                spamId:
+                  type: integer
+                  example: 2
+                comment:
+                  type: string
+                  example: "This flavor is amazing!"
+      responses:
+        '201':
+          description: Comment created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  newComment:
+                    $ref: '#/components/schemas/Comment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /comments/{id}:
+    patch:
+      tags:
+        - Comments
+      summary: Update a comment
+      description: Update an existing comment (TODO - Implement in ticket)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Comment updated successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Comment not found
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      tags:
+        - Comments
+      summary: Delete a comment
+      description: Delete a comment (TODO - Implement in ticket)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Comment deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Comment not found
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /quiz:
+    get:
+      tags:
+        - Quiz
+      summary: Get all quiz questions
+      description: Returns all quiz questions with their options
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuizQuestion'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /quiz/{category}:
+    get:
+      tags:
+        - Quiz
+      summary: Get quiz result by category
+      description: Returns the quiz result for a specific category (TODO - Implement in ticket)
+      parameters:
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The personality category
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizResult'
+        '404':
+          description: Category not found
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /ratings:
+    get:
+      tags:
+        - Ratings
+      summary: Get all ratings
+      description: Returns all ratings for all SPAM flavors
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rating'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      tags:
+        - Ratings
+      summary: Add a new rating
+      description: Create a new rating for a SPAM flavor (TODO - Implement in ticket)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - spamId
+                - rating
+              properties:
+                spamId:
+                  type: integer
+                  example: 6
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                  example: 5
+      responses:
+        '201':
+          description: Rating created successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /ratings/{spamId}:
+    get:
+      tags:
+        - Ratings
+      summary: Get average rating by SPAM ID
+      description: Returns the average rating for a specific SPAM flavor
+      parameters:
+        - name: spamId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The SPAM flavor ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rating:
+                    type: number
+                    format: float
+                    example: 4.5
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /spams:
+    get:
+      tags:
+        - SPAM
+      summary: Get all SPAM flavors
+      description: Returns all available SPAM flavors
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  spams:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Spam'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      tags:
+        - SPAM
+      summary: Create a new SPAM flavor
+      description: Add a new SPAM flavor to the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpamInput'
+      responses:
+        '201':
+          description: SPAM flavor created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  spam:
+                    $ref: '#/components/schemas/Spam'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /spams/{id}:
+    get:
+      tags:
+        - SPAM
+      summary: Get a SPAM flavor by ID
+      description: Returns a specific SPAM flavor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The SPAM flavor ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  spam:
+                    $ref: '#/components/schemas/Spam'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    patch:
+      tags:
+        - SPAM
+      summary: Update a SPAM flavor
+      description: Update an existing SPAM flavor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpamInput'
+      responses:
+        '200':
+          description: SPAM flavor updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      tags:
+        - SPAM
+      summary: Delete a SPAM flavor
+      description: Remove a SPAM flavor from the database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: SPAM flavor deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /users:
+    post:
+      tags:
+        - Users
+      summary: Create or update a user
+      description: Upsert a user (create if doesn't exist, update if exists)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userName
+                - email
+              properties:
+                userName:
+                  type: string
+                  example: "spamfan123"
+                email:
+                  type: string
+                  format: email
+                  example: "spam@example.org"
+      responses:
+        '201':
+          description: User created/updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /users/{auth0Id}:
+    get:
+      tags:
+        - Users
+      summary: Get user by Auth0 ID
+      description: Returns a user by their Auth0 ID
+      parameters:
+        - name: auth0Id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The Auth0 user ID
+          example: "auth0|xxx123"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Auth0 JWT token. See README for instructions on obtaining a token.
+
+        **Example**: `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...`
+
+  schemas:
+    AboutText:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        section:
+          type: string
+          example: "intro"
+        content:
+          type: string
+          example: "Welcome to SPAM history..."
+
+    AboutImage:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        url:
+          type: string
+          example: "/images/spam-history.jpg"
+        alt_text:
+          type: string
+          example: "Historical SPAM can"
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: string
+          example: "auth0|xxx123"
+        spam_id:
+          type: integer
+          example: 2
+        comment_text:
+          type: string
+          example: "Great flavor!"
+        created_date:
+          type: integer
+          description: Unix timestamp
+          example: 1625152800
+
+    QuizQuestion:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        question_text:
+          type: string
+          example: "What's your favorite activity?"
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              option_text:
+                type: string
+                example: "Reading"
+              category:
+                type: string
+                example: "classic"
+
+    QuizResult:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        category:
+          type: string
+          example: "classic"
+        result_text:
+          type: string
+          example: "You're a classic SPAM lover!"
+        spam_id:
+          type: integer
+          example: 1
+
+    Rating:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: string
+          example: "auth0|xxx123"
+        spam_id:
+          type: integer
+          example: 1
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 5
+
+    Spam:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Classic"
+        description:
+          type: string
+          example: "The original SPAM"
+        image:
+          type: string
+          example: "/images/classic.png"
+
+    SpamInput:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+          example: "Classic"
+        description:
+          type: string
+          example: "The original SPAM"
+        image:
+          type: string
+          example: "/images/classic.png"
+
+    User:
+      type: object
+      properties:
+        auth0_id:
+          type: string
+          example: "auth0|xxx123"
+        user_name:
+          type: string
+          example: "Roger"
+        email:
+          type: string
+          format: email
+          example: "roger@example.org"
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "An error occurred"
+
+  responses:
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            message: "Unauthorized"

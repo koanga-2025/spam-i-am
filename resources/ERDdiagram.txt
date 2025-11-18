@@ -1,0 +1,59 @@
+Table spam {
+  id integer [primary key]
+  name string
+  image string 
+  description string 
+  flavour_profile string
+}
+
+Table users {
+    auth0_id string [primary key]
+    user_name string
+    email string 
+}
+
+Table ratings {
+  id integer [primary key]
+  user_id string 
+  spam_id integer 
+  rating integer
+}
+
+Table questions {
+  id integer [primary key]
+  question string 
+}
+
+Table options {
+  id integer [primary key]
+  question_id integer 
+  image string 
+  text string 
+  category string 
+}
+
+Table results {
+  id integer [primary key]
+  category string 
+  name string 
+  image string 
+  info string 
+}
+
+Table comments {
+  id integer [primary key]
+  user_id string 
+  spam_id integer 
+  comment_text string 
+  created_date integer 
+}
+
+Ref: ratings.user_id > users.auth0_id
+
+Ref: ratings.spam_id > spam.id
+
+Ref: options.question_id > questions.id
+
+Ref: spam.id < comments.spam_id
+
+Ref: users.auth0_id < comments.user_id
