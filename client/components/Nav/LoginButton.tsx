@@ -6,12 +6,10 @@ function LoginButton() {
   const { user, logout, loginWithRedirect } = useAuth0()
 
   const handleSignOut = () => {
-    console.log('sign out')
     return logout()
   }
 
   const handleSignIn = () => {
-    console.log('sign in')
     return loginWithRedirect()
   }
 
