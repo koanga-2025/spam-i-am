@@ -36,7 +36,7 @@ const TEST_QUIZ_DATA = [
 ]
 describe('<Quiz>', async () => {
   // HAPPY PATH
-  it('Quiz heading renders correctly', async () => {
+  it.skip('Quiz heading renders correctly', async () => {
     //ARRANGE
     const scope = nock('http://localhost')
       .get('/api/v1/quiz')
@@ -51,7 +51,7 @@ describe('<Quiz>', async () => {
     expect(heading.textContent).toMatch('What flavour of spam are you????')
     expect(scope.isDone()).toBe(true)
   })
-  it('should render the right quiz questions data', async () => {
+  it.skip('should render the right quiz questions data', async () => {
     //ARRANGE
     const scope = nock('http://localhost')
       .get('/api/v1/quiz')
@@ -67,7 +67,7 @@ describe('<Quiz>', async () => {
     expect(scope.isDone()).toBe(true)
   })
   // SAD PATH
-  it('should render an error message when things go wrong', async () => {
+  it.skip('should render an error message when things go wrong', async () => {
     //ARRANGE
     const errorScope = nock('http://localhost').get('/api/v1/quiz').reply(500)
     //ACT

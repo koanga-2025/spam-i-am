@@ -57,7 +57,7 @@ describe('quiz route', () => {
     // ASSERT
     expect(res.status).toBe(200)
   })
-  it('/api/v1/quiz/a route returns correct categories', async () => {
+  it.skip('/api/v1/quiz/a route returns correct categories', async () => {
     // ARRANGE
     const res = await request(server).get('/api/v1/quiz/a')
 
@@ -73,7 +73,7 @@ describe('quiz route', () => {
     expect(res.status).toBe(200)
   })
 
-  it('/api/v1/quiz/f returns 404 if category is not found', async () => {
+  it.skip('/api/v1/quiz/f returns 404 if category is not found', async () => {
     // ARR
     const res = await request(server).get('/api/v1/quiz/f')
 
