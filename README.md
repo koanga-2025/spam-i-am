@@ -148,7 +148,9 @@ The OpenAPI specification is available in `openapi.yaml` at the root of the proj
 
 ---
 
-### Quick Reference
+### Quick API Reference
+
+<details>
 
 ### About Routes
 
@@ -313,6 +315,7 @@ The OpenAPI specification is available in `openapi.yaml` at the root of the proj
   "email": "roger@example.org"
 }
 ```
+</details>
 
 ---
 
