@@ -35,6 +35,7 @@ This project is a playful and engaging web platform designed for SPAM enthusiast
 ## Tech Stack
 
 ### Frontend
+
 - **React 18** - UI library
 - **TypeScript** - Type-safe JavaScript
 - **Vite** - Build tool and dev server
@@ -45,6 +46,7 @@ This project is a playful and engaging web platform designed for SPAM enthusiast
 - **Auth0** - Authentication
 
 ### Backend
+
 - **Node.js** - JavaScript runtime
 - **Express** - Web framework
 - **TypeScript** - Type-safe JavaScript
@@ -54,6 +56,7 @@ This project is a playful and engaging web platform designed for SPAM enthusiast
 - **Swagger** - API documentation
 
 ### Testing & Development
+
 - **Vitest** - Unit testing framework
 - **Testing Library** - React testing utilities
 - **ESLint** - Code linting
@@ -377,3 +380,5 @@ Suppose, you've created a new user called hello@example.com and the password is 
 It's a good idea to keep the HTTP request in POSTMAN because you'll need it for later.
 
 </details>
+
+//update
