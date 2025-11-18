@@ -100,6 +100,20 @@ npm run dev
 - When your ticket is complete, push changes and raise a pull request.
 - After merge, Git Leads will announce; everyone should pull main into their branches.
 
+### Branch Protection & CI/CD
+
+The `main` branch has the following protections enabled:
+
+- **Pull requests required** - You cannot push directly to main
+- **Status checks must pass** - All tests must pass before merging
+- **GitHub Actions CI** - Automated tests run on every push and pull request
+
+Our CI workflow (`.github/workflows/node.yml`) automatically runs tests on:
+- Every push to `main` branch
+- Every pull request targeting `main` branch
+
+If tests fail, the pull request cannot be merged. This ensures code quality and prevents broken code from reaching main.
+
 ---
 
 ## Working With Tickets
