@@ -109,6 +109,7 @@ The `main` branch has the following protections enabled:
 - **GitHub Actions CI** - Automated tests run on every push and pull request
 
 Our CI workflow (`.github/workflows/node.yml`) automatically runs tests on:
+
 - Every push to `main` branch
 - Every pull request targeting `main` branch
 
@@ -137,6 +138,7 @@ All API endpoints are prefixed with `/api/v1`.
 **Swagger UI** is available at: **[http://localhost:3000/api-docs](http://localhost:3000/api-docs)**
 
 Once the server is running (`npm run dev`), visit the Swagger UI to:
+
 - View all available endpoints
 - See request/response schemas
 - **Test API calls directly in your browser**
@@ -150,12 +152,13 @@ The OpenAPI specification is available in `openapi.yaml` at the root of the proj
 
 ### About Routes
 
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|---------------|-------------|
-| GET | `/about/text` | No | Get all about page text content |
-| GET | `/about/images` | No | Get all about page images |
+| Method | Endpoint        | Auth Required | Description                     |
+| ------ | --------------- | ------------- | ------------------------------- |
+| GET    | `/about/text`   | No            | Get all about page text content |
+| GET    | `/about/images` | No            | Get all about page images       |
 
 **Example Response (GET /about/text):**
+
 ```json
 [
   {
@@ -170,14 +173,15 @@ The OpenAPI specification is available in `openapi.yaml` at the root of the proj
 
 ### Comments Routes
 
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|---------------|-------------|
-| GET | `/comments/:spamId` | No | Get all comments for a specific SPAM flavor |
-| POST | `/comments` | **Yes** | Add a new comment to a SPAM flavor |
-| PATCH | `/comments/:id` | **Yes** | Update a comment (TODO: Implement in ticket) |
-| DELETE | `/comments/:id` | **Yes** | Delete a comment (TODO: Implement in ticket) |
+| Method | Endpoint            | Auth Required | Description                                  |
+| ------ | ------------------- | ------------- | -------------------------------------------- |
+| GET    | `/comments/:spamId` | No            | Get all comments for a specific SPAM flavor  |
+| POST   | `/comments`         | **Yes**       | Add a new comment to a SPAM flavor           |
+| PATCH  | `/comments/:id`     | **Yes**       | Update a comment (TODO: Implement in ticket) |
+| DELETE | `/comments/:id`     | **Yes**       | Delete a comment (TODO: Implement in ticket) |
 
 **Example Request (POST /comments):**
+
 ```json
 {
   "spamId": 2,
@@ -186,6 +190,7 @@ The OpenAPI specification is available in `openapi.yaml` at the root of the proj
 ```
 
 **Example Response (GET /comments/2):**
+
 ```json
 {
   "comments": [
@@ -204,12 +209,13 @@ The OpenAPI specification is available in `openapi.yaml` at the root of the proj
 
 ### Quiz Routes
 
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|---------------|-------------|
-| GET | `/quiz` | No | Get all quiz questions with options |
-| GET | `/quiz/:category` | No | Get quiz result by category (TODO: Implement in ticket) |
+| Method | Endpoint          | Auth Required | Description                                             |
+| ------ | ----------------- | ------------- | ------------------------------------------------------- |
+| GET    | `/quiz`           | No            | Get all quiz questions with options                     |
+| GET    | `/quiz/:category` | No            | Get quiz result by category (TODO: Implement in ticket) |
 
 **Example Response (GET /quiz):**
+
 ```json
 [
   {
@@ -230,13 +236,14 @@ The OpenAPI specification is available in `openapi.yaml` at the root of the proj
 
 ### Ratings Routes
 
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|---------------|-------------|
-| GET | `/ratings` | No | Get all ratings for all SPAM flavors |
-| GET | `/ratings/:spamId` | No | Get average rating for a specific SPAM flavor |
-| POST | `/ratings` | **Yes** | Add a new rating (TODO: Implement in ticket) |
+| Method | Endpoint           | Auth Required | Description                                   |
+| ------ | ------------------ | ------------- | --------------------------------------------- |
+| GET    | `/ratings`         | No            | Get all ratings for all SPAM flavors          |
+| GET    | `/ratings/:spamId` | No            | Get average rating for a specific SPAM flavor |
+| POST   | `/ratings`         | **Yes**       | Add a new rating (TODO: Implement in ticket)  |
 
 **Example Response (GET /ratings/2):**
+
 ```json
 {
   "rating": 4.5
@@ -244,6 +251,7 @@ The OpenAPI specification is available in `openapi.yaml` at the root of the proj
 ```
 
 **Example Request (POST /ratings - to be implemented):**
+
 ```json
 {
   "spamId": 6,
@@ -255,15 +263,16 @@ The OpenAPI specification is available in `openapi.yaml` at the root of the proj
 
 ### SPAM Routes
 
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|---------------|-------------|
-| GET | `/spams` | No | Get all SPAM flavors |
-| GET | `/spams/:id` | No | Get a specific SPAM flavor by ID |
-| POST | `/spams` | No | Create a new SPAM flavor |
-| PATCH | `/spams/:id` | No | Update a SPAM flavor |
-| DELETE | `/spams/:id` | No | Delete a SPAM flavor |
+| Method | Endpoint     | Auth Required | Description                      |
+| ------ | ------------ | ------------- | -------------------------------- |
+| GET    | `/spams`     | No            | Get all SPAM flavors             |
+| GET    | `/spams/:id` | No            | Get a specific SPAM flavor by ID |
+| POST   | `/spams`     | No            | Create a new SPAM flavor         |
+| PATCH  | `/spams/:id` | No            | Update a SPAM flavor             |
+| DELETE | `/spams/:id` | No            | Delete a SPAM flavor             |
 
 **Example Response (GET /spams):**
+
 ```json
 {
   "spams": [
@@ -281,12 +290,13 @@ The OpenAPI specification is available in `openapi.yaml` at the root of the proj
 
 ### Users Routes
 
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|---------------|-------------|
-| POST | `/users` | **Yes** | Create or update a user (upsert) |
-| GET | `/users/:auth0Id` | No | Get user by Auth0 ID |
+| Method | Endpoint          | Auth Required | Description                      |
+| ------ | ----------------- | ------------- | -------------------------------- |
+| POST   | `/users`          | **Yes**       | Create or update a user (upsert) |
+| GET    | `/users/:auth0Id` | No            | Get user by Auth0 ID             |
 
 **Example Request (POST /users):**
+
 ```json
 {
   "userName": "spamfan123",
@@ -295,6 +305,7 @@ The OpenAPI specification is available in `openapi.yaml` at the root of the proj
 ```
 
 **Example Response (GET /users/auth0\|xxx123):**
+
 ```json
 {
   "auth0_id": "auth0|xxx123",
@@ -331,3 +342,5 @@ Suppose, you've created a new user called hello@example.com and the password is 
 It's a good idea to keep the HTTP request in POSTMAN because you'll need it for later.
 
 </details>
+
+////test line
