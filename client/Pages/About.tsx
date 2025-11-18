@@ -62,11 +62,13 @@ function About() {
       <div>
         <section>
           <article>
-            <h1>The history of SPAM</h1>
+            <h1 className="bg-yellow-400 text-4xl font-bold text-blue-900">
+              The history of SPAM :spam:
+            </h1>
             {spamHistory.map((section, idx) => (
               <section key={idx}>
-                <h2>{section.title}</h2>
-                <p>{section.body}</p>
+                <h2 className="bg-yellow-400">{section.title}</h2>
+                <p className="bg-blue-900 text-yellow-300">{section.body}</p>
               </section>
             ))}
           </article>
