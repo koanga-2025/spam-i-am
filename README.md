@@ -342,5 +342,3 @@ Suppose, you've created a new user called hello@example.com and the password is 
 It's a good idea to keep the HTTP request in POSTMAN because you'll need it for later.
 
 </details>
-
-////test line
