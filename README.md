@@ -14,7 +14,7 @@ Welcome to the wonderful world of SPAM! This teacher-led, spam-packed project is
 
 This project is a playful and engaging web platform designed for SPAM enthusiasts, featuring interactive games, community ratings, and quirky content focused on SPAM. The core MVP offers a fun experience with games, ratings, comments, and a personality quiz, while stretch goals envision deeper customization and user-generated content.
 
-## Key Features
+## MVP Features
 
 - **Friendly Home Page:** Welcoming users with a bold image or animation to set a fun atmosphere.
 - **About Page:** Educating users about the (fictional, funny) history of SPAM.
@@ -27,8 +27,9 @@ This project is a playful and engaging web platform designed for SPAM enthusiast
 
 - **Tofu Toggle:** Switch the site to a vegan-friendly experience, where SPAM becomes TOFU in games.
 - **Advanced Gaming:** Save scores in Snake and compete on leaderboards.
-- **Customization:** Users can enhance their profile with badges and logs (“splog”).
+- **Customization:** Users can enhance their profile with badges and logs ("splog").
 - **Recipe Sharing:** Community members upload SPAM recipes and photos, fostering culinary creativity.
+- **Fan Picture Gallery:** Users can upload their own SPAM-related photos to a community gallery.
 - **Email Newsletter:** Weekly SPAM-themed updates sent to engaged users.
 
 ## Onboarding
@@ -315,6 +316,7 @@ The OpenAPI specification is available in `openapi.yaml` at the root of the proj
   "email": "roger@example.org"
 }
 ```
+
 </details>
 
 ---

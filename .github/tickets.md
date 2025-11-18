@@ -454,3 +454,43 @@ Write a front end test to test the number of obstacles. This will entail simulat
 **Size:**
 
 ---
+
+### STRETCH: Fan Picture Gallery - Upload Your SPAM Photos #20
+
+**Description:**
+Create a fan picture gallery feature where users can upload their own SPAM-related photos to share with the community.
+
+**Requirements:**
+
+1. **Backend:**
+   - Create a database table to store image metadata (user_id, image_url, caption, upload_date)
+   - Create API endpoint `POST /api/v1/gallery` (authenticated) to handle image uploads
+   - Create API endpoint `GET /api/v1/gallery` to retrieve all gallery images
+   - Implement image upload handling (consider using a service like Cloudinary or storing in public folder)
+
+2. **Frontend:**
+   - Create a Gallery page component
+   - Build an upload form with image file input and optional caption
+   - Display all uploaded images in a responsive grid layout
+   - Show uploader name and date with each image
+   - Add image preview before upload
+
+3. **Testing:**
+   - Write backend integration test for image upload endpoint
+   - Write frontend test to verify gallery page renders images correctly
+   - Test file upload validation (file size, file type)
+
+**Acceptance Criteria:**
+- Authenticated users can upload SPAM-related photos
+- Uploaded photos appear in the community gallery
+- Each photo displays who uploaded it and when
+- Only image files are accepted (jpg, png, gif)
+- File size is limited (e.g., max 5MB)
+
+**Labels:** frontend, backend, auth0
+
+**Priority:** P3
+
+**Size:** L
+
+---
