@@ -10,7 +10,7 @@
   "scripts": {
     "test": "vitest",
     "start": "node dist/server.js",
-    "dev": "run-p dev:client dev:server",
+    "dev": "vite --host",
     "dev:client": "vite",
     "dev:server": "tsx watch server/index.ts",
     "build": "run-s build:client build:server",
