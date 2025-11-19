@@ -1,11 +1,27 @@
 import { useAboutText, useAboutImages } from '../hooks/useAbout'
 import LoadingSpinner from '../components/UI/LoadingSpinner'
 function About() {
-  const { data: spamHistory } = useAboutText()
-  const { data: images } = useAboutImages()
+  const {
+    data: spamHistory,
+    isLoading: isTextLoading,
+    isError: isTextError,
+  } = useAboutText()
+  const {
+    data: images,
+    isLoading: areImagesLoading,
+    isError: areImagesError,
+  } = useAboutImages()
 
-  if (!spamHistory || !images) {
+  if (isTextLoading || areImagesLoading) {
     return <LoadingSpinner />
+  }
+
+  if (isTextError || areImagesError) {
+    return (
+      <p className="text-center text-sm text-gray-600">
+        There was an error loading the page content.
+      </p>
+    )
   }
 
   return (
@@ -15,8 +31,8 @@ function About() {
           <h1 className="mb-8 text-center text-4xl font-bold">
             The history of SPAM
           </h1>
-          {spamHistory?.map((section, idx) => (
-            <section key={idx} className="mb-6">
+          {spamHistory?.map((section, id) => (
+            <section key={id} className="mb-6">
               <h2 className="mb-3 text-2xl font-semibold">{section.title}</h2>
               <p className="text-lg leading-relaxed">{section.body}</p>
             </section>
@@ -24,8 +40,8 @@ function About() {
         </article>
       </section>
       <section className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        {images?.map((image, idx) => (
-          <div key={idx} className="text-center">
+        {images?.map((image, id) => (
+          <div key={id} className="text-center">
             <img
               src={`/images/${image.link}`}
               alt={image.alt}

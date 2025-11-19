@@ -4,7 +4,7 @@ import { logError } from './api-utils'
 
 const rootUrl = new URL(`/api/v1`, document.baseURI)
 
-export async function getAllAboutText() {
+export function getAllAboutText() {
   return request
     .get(`${rootUrl}/about/text`)
     .then((res) => {
@@ -13,7 +13,7 @@ export async function getAllAboutText() {
     .catch(logError)
 }
 
-export async function getAllAboutImages() {
+export function getAllAboutImages() {
   return request
     .get(`${rootUrl}/about/images`)
     .then((res) => {
