@@ -63,7 +63,7 @@ function About() {
         <section>
           <article>
             <h1 className="bg-yellow-400 text-4xl font-bold text-blue-900">
-              The history of SPAM :spam:
+              The history of SPAM
             </h1>
             {spamHistory.map((section, idx) => (
               <section key={idx}>
