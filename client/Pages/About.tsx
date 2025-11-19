@@ -59,24 +59,26 @@ function About() {
   return (
     // TODO: Style this page!
     <>
-      <div>
-        <section>
+      <div className="flex gap-8 p-8">
+        <section className="flex-1">
           <article>
-            <h1 className="bg-yellow-400 text-4xl font-bold text-blue-900">
-              The history of SPAM
-            </h1>
+            <h1 className="mb-6 text-4xl font-bold">The history of SPAM</h1>
             {spamHistory.map((section, idx) => (
               <section key={idx}>
-                <h2 className="bg-yellow-400">{section.title}</h2>
-                <p className="bg-blue-900 text-yellow-300">{section.body}</p>
+                <h2>{section.title}</h2>
+                <p>{section.body}</p>
               </section>
             ))}
           </article>
         </section>
-        <section>
+        <section className="flex-1">
           {images.map((image, idx) => (
-            <div key={idx}>
-              <img src={image.link} alt={image.alt} />
+            <div key={idx} className="mb-6">
+              <img
+                src={image.link}
+                alt={image.alt}
+                className="max-w-6xl rounded-lg border-solid shadow-md"
+              />
               <p>
                 <em>{image.caption}</em>
               </p>
