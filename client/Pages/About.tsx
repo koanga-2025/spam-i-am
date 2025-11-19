@@ -57,28 +57,28 @@ function About() {
   ]
 
   return (
-    // TODO: Style this page!
     <>
       <div className="flex gap-8 p-8">
         <section className="flex-[5]">
           <article>
-            <h1 className="mb-6 text-5xl  font-extrabold text-center font-heading text-blue-900">The history of SPAM</h1>
+            <h1 
+            className="mb-6 text-5xl  font-extrabold text-center font-heading text-blue-900"
+            >The history of SPAM</h1>
             {spamHistory.map((section, idx) => (
               <section className='border-2 rounded-lg border-blue-900 mb-5' key={idx}>
                 <h2 className = 'font-extrabold text-4xl font-heading mb-6 mt-6'>{section.title}</h2>
                 <p className='text-2xl font-body'>{section.body}</p>
-              </section>
-            ))}
+              </section>))}
           </article>
         </section>
-        <section className="flex-[1]">
+        <section 
+        className="flex-[1]">
           {images.map((image, idx) => (
             <div key={idx} className="mb-6">
               <img
                 src={image.link}
                 alt={image.alt}
-                className="border-2 rounded-lg border-blue-900 shadow-md"
-              />
+                className="border-2 rounded-lg border-blue-900 shadow-md"/>
               <p>
                 <em>{image.caption}</em>
               </p>
@@ -91,3 +91,4 @@ function About() {
 }
 
 export default About
+
