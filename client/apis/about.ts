@@ -12,3 +12,12 @@ export async function getAllAboutText() {
     })
     .catch(logError)
 }
+
+export async function getAllAboutImages() {
+  return request
+    .get(`${rootUrl}/about/images`)
+    .then((res) => {
+      return res.body as AboutImages[]
+    })
+    .catch(logError)
+}
