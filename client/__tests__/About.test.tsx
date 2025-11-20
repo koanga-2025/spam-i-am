@@ -1,52 +1,18 @@
 // @vitest-environment jsdom
 
 import { renderApp } from '../test-setup.tsx'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-
-// Mock the hooks
-vi.mock('../hooks/useAbout', () => ({
-  useAboutText: vi.fn(),
-  useAboutImages: vi.fn(),
-}))
-
-import { useAboutText, useAboutImages } from '../hooks/useAbout'
-
-// Mock data
-const mockText = [
-  { id: 1, title: 'The history of SPAM', body: 'Test body 1' },
-  { id: 2, title: 'Test Title 2', body: 'Test body 2' },
-]
-const mockImages = [
-  {
-    id: 1,
-    link: 'test-image-1.jpg',
-    alt: 'Test Alt 1',
-    caption: 'Test Caption 1',
-  },
-  {
-    id: 2,
-    link: 'test-image-2.jpg',
-    alt: 'Test Alt 2',
-    caption: 'Test Caption 2',
-  },
-]
+import { describe, it, expect, beforeEach } from 'vitest'
+import nock from 'nock'
+import { mockAboutText, mockAboutImages } from './fixtures/mockData'
 
 describe('About.tsx', () => {
   beforeEach(() => {
-    vi.mocked(useAboutText).mockReturnValue({
-      data: mockText,
-      isLoading: false,
-      isError: false,
-      error: null,
-      refetch: vi.fn(),
-    } as any)
-    vi.mocked(useAboutImages).mockReturnValue({
-      data: mockImages,
-      isLoading: false,
-      isError: false,
-      error: null,
-      refetch: vi.fn(),
-    } as any)
+    // Mock the API responses for About page
+    nock('http://localhost').get('/api/v1/about/text').reply(200, mockAboutText)
+
+    nock('http://localhost')
+      .get('/api/v1/about/images')
+      .reply(200, mockAboutImages)
   })
 
   it('About heading renders correctly', async () => {
