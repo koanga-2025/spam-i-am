@@ -35,7 +35,7 @@ function SpamDetails() {
             </p>
           </div>
           <RatingAvg spamId={data.id} />
-          <ListComments />
+          <ListComments spamId={data.id} />
           <AddComment />
         </section>
       </div>

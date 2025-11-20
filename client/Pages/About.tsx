@@ -1,92 +1,64 @@
+import { useAboutText, useAboutImages } from '../hooks/useAbout'
+import LoadingSpinner from '../components/UI/LoadingSpinner'
 function About() {
-  // TODO: replace this fake data with real data from the dabatase
-  const spamHistory = [
-    {
-      title: 'Title I',
-      body: `SPAM ipsum dolor sit amet, delicious pork shoulder adipiscing elit. Nulla vel condimentum SPAM in, condimentum eget, lectus. Whether fried, baked, or straight from the can, SPAM makes every meal a delight. Ut enim ad minim veniam, quis nostrud SPAM exercitation laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in ham hock in voluptate velit esse cillum SPAM dolore eu fugiat nulla pariatur. A slice of SPAM is the best way to start the day. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. From breakfast scrambles to SPAM sandwiches, the possibilities are endless. Nullam quis risus eget urna mollis ornare vel SPAM lectus. Integer posuere erat a ante venenatis dapibus posuere velit SPAM aliquet. Crispy on the outside, tender on the inside, SPAM brings joy to your taste buds. Curabitur blandit tempus SPAM porttitor. Maecenas faucibus mollis interdum. Cum sociis natoque SPAM penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis condimentum fermentum, SPAM condimentum purus.`,
-    },
-    {
-      title: 'Title II',
-      body: `SPAM ipsum dolor sit amet, delicious pork shoulder adipiscing elit. Nulla vel condimentum SPAM in, condimentum eget, lectus. Whether fried, baked, or straight from the can, SPAM makes every meal a delight. Ut enim ad minim veniam, quis nostrud SPAM exercitation laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in ham hock in voluptate velit esse cillum SPAM dolore eu fugiat nulla pariatur. A slice of SPAM is the best way to start the day. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. From breakfast scrambles to SPAM sandwiches, the possibilities are endless. Nullam quis risus eget urna mollis ornare vel SPAM lectus. Integer posuere erat a ante venenatis dapibus posuere velit SPAM aliquet. Crispy on the outside, tender on the inside, SPAM brings joy to your taste buds. Curabitur blandit tempus SPAM porttitor. Maecenas faucibus mollis interdum. Cum sociis natoque SPAM penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis condimentum fermentum, SPAM condimentum purus.`,
-    },
-    {
-      title: 'Title III',
-      body: `SPAM ipsum dolor sit amet, delicious pork shoulder adipiscing elit. Nulla vel condimentum SPAM in, condimentum eget, lectus. Whether fried, baked, or straight from the can, SPAM makes every meal a delight. Ut enim ad minim veniam, quis nostrud SPAM exercitation laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in ham hock in voluptate velit esse cillum SPAM dolore eu fugiat nulla pariatur. A slice of SPAM is the best way to start the day. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. From breakfast scrambles to SPAM sandwiches, the possibilities are endless. Nullam quis risus eget urna mollis ornare vel SPAM lectus. Integer posuere erat a ante venenatis dapibus posuere velit SPAM aliquet. Crispy on the outside, tender on the inside, SPAM brings joy to your taste buds. Curabitur blandit tempus SPAM porttitor. Maecenas faucibus mollis interdum. Cum sociis natoque SPAM penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis condimentum fermentum, SPAM condimentum purus.`,
-    },
-    {
-      title: 'Title IV',
-      body: `SPAM ipsum dolor sit amet, delicious pork shoulder adipiscing elit. Nulla vel condimentum SPAM in, condimentum eget, lectus. Whether fried, baked, or straight from the can, SPAM makes every meal a delight. Ut enim ad minim veniam, quis nostrud SPAM exercitation laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in ham hock in voluptate velit esse cillum SPAM dolore eu fugiat nulla pariatur. A slice of SPAM is the best way to start the day. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. From breakfast scrambles to SPAM sandwiches, the possibilities are endless. Nullam quis risus eget urna mollis ornare vel SPAM lectus. Integer posuere erat a ante venenatis dapibus posuere velit SPAM aliquet. Crispy on the outside, tender on the inside, SPAM brings joy to your taste buds. Curabitur blandit tempus SPAM porttitor. Maecenas faucibus mollis interdum. Cum sociis natoque SPAM penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis condimentum fermentum, SPAM condimentum purus.`,
-    },
-    {
-      title: 'Epilogue',
-      body: `SPAM ipsum dolor sit amet, pork shoulder adipiscing elit. Nulla condimentum SPAM, condimentum eget lectus. Whether fried or baked, SPAM makes every meal a delight. From breakfast scrambles to SPAM sandwiches, the possibilities are endless. Crispy outside, tender inside, SPAM brings joy to every bite, a reminder of delicious, simple times.`,
-    },
-  ]
-
-  const images = [
-    {
-      link: 'https://placehold.co/300x200/png',
-      alt: '',
-      caption:
-        'SPAM ipsum dolor sit amet, delicious pork shoulder adipiscing elit.',
-    },
-    {
-      link: 'https://placehold.co/300x200/png',
-      alt: '',
-      caption:
-        'SPAM ipsum dolor sit amet, delicious pork shoulder adipiscing elit.',
-    },
-    {
-      link: 'https://placehold.co/300x200/png',
-      alt: '',
-      caption:
-        'SPAM ipsum dolor sit amet, delicious pork shoulder adipiscing elit.',
-    },
-    {
-      link: 'https://placehold.co/300x200/png',
-      alt: '',
-      caption:
-        'SPAM ipsum dolor sit amet, delicious pork shoulder adipiscing elit.',
-    },
-    {
-      link: 'https://placehold.co/300x200/png',
-      alt: '',
-      caption:
-        'SPAM ipsum dolor sit amet, delicious pork shoulder adipiscing elit.',
-    },
-  ]
+  const {
+    data: spamHistory,
+    isLoading: isTextLoading,
+    isError: isTextError,
+  } = useAboutText()
+  const {
+    data: images,
+    isLoading: areImagesLoading,
+    isError: areImagesError,
+  } = useAboutImages()
 
   return (
-    <>
-      <div className="flex gap-8 p-8">
-        <section className="flex-[5]">
-          <article>
-            <h1 className="mb-6 text-5xl font-extrabold text-center font-heading text-blue-900"
-            >The history of SPAM</h1>
-            {spamHistory.map((section, idx) => (
-              <section className="border-2 rounded-lg border-blue-900 mb-5" key={idx}>
-                <h2 className="font-extrabold text-4xl font-heading mb-6 mt-6">{section.title}</h2>
-                <p className="text-2xl font-body">{section.body}</p>
-              </section>))}
-          </article>
-        </section>
-        <section className="flex-[1]">
-          {images.map((image, idx) => (
-            <div key={idx} className="mb-6">
-              <img
-                src={image.link}
-                alt={image.alt}
-                className="border-2 rounded-lg border-blue-900 shadow-md"/>
-              <p>
-                <em>{image.caption}</em>
-              </p>
-            </div>
-          ))}
-        </section>
-      </div>
-    </>
+    <div className="flex gap-8 p-8">
+      <section className="flex-[5]">
+        <article>
+          <h1 className="mb-6 text-center font-heading text-5xl font-extrabold text-blue-900">
+            The history of SPAM
+          </h1>
+          {(isTextLoading || areImagesLoading) && <LoadingSpinner />}
+          {(isTextError || areImagesError) && (
+            <p className="text-center text-sm text-gray-600">
+              There was an error loading the page content.
+            </p>
+          )}
+          {spamHistory && images ? (
+            <>
+              {spamHistory.map((section, id) => (
+                <section
+                  key={id}
+                  className="mb-5 rounded-lg border-2 border-blue-900"
+                >
+                  <h2 className="mb-6 mt-6 font-heading text-4xl font-extrabold">
+                    {section.title}
+                  </h2>
+                  <p className="font-body text-2xl">{section.body}</p>
+                </section>
+              ))}
+            </>
+          ) : null}
+        </article>
+      </section>
+
+      <section className="flex-[1]">
+        {images?.map((image, id) => (
+          <div key={id} className="mb-6">
+            <img
+              src={`/images/${image.link}`}
+              alt={image.alt}
+              className="rounded-lg border-2 border-blue-900 shadow-md"
+            />
+            <p>
+              <em>{image.caption}</em>
+            </p>
+          </div>
+        ))}
+      </section>
+    </div>
   )
 }
 
 export default About
-

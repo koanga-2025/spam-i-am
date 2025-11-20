@@ -1,14 +1,30 @@
-function ListComments() {
-  // TODO: call a custom hook (that uses useQuery) to get all comments for this specific spam.
-  // TODO: useParams to get the unique spamId
+import { useComments } from '../../hooks/useComments'
+import { formatDateTime } from '../../utils/formatTimer'
+import ErrorPage from '../../Pages/ErrorPage'
+
+interface Props {
+  spamId: number
+}
+
+function ListComments({ spamId }: Props) {
+  const { data: comments, isLoading, isError } = useComments(spamId)
+
+  if (isLoading) {
+    return <p>Loading comments...</p>
+  }
+
+  if (isError) return <ErrorPage />
 
   return (
     <>
       <h4>Comments</h4>
       <ul>
-        <li>{/* Comment text: */}</li>
-        <li>{/* Created on: */}</li>
-        <br></br>
+        {comments?.map((comment) => (
+          <li key={comment.id}>
+            {comment.comment_text}
+            Created on: {formatDateTime(comment.created_date)}
+          </li>
+        ))}
       </ul>
     </>
   )
