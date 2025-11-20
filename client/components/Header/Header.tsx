@@ -32,11 +32,7 @@ function Header() {
     { title: 'Quiz', link: './quiz' },
     { title: 'Rate That Spam!', link: './rate-spam' },
   ]
-
-  const navClass = `${isNavOpen ? 'block bg-spamYellow' : 'hidden'}`
-  const navClass2 = `${isNavOpen && isSmall ? 'absolute top-20 rounded-xl place-content-center' : ''}`
-  const navClass3 = `${!isSmall && isNavOpen ? 'space-x-3' : ''}`
-
+  
   return (
     <header className="bg-spamYellow px-3">
       <nav className="flex items-center justify-center md:justify-between">
@@ -67,12 +63,14 @@ function Header() {
           />
         </NavLink>
         <ul
-          className={`flex flex-col items-center md:flex-row ${navClass} ${navClass2} ${navClass3}`}
+          className={`flex flex-col items-center md:flex-row ${isNavOpen ? 'block bg-spamYellow' : 'hidden' // if nav is open or closed
+            } ${isNavOpen && isSmall ? 'absolute top-20 rounded-xl place-content-center' : 'space-x-3' // additional classes for small screens when nav is open
+            } `}
         >
           {menuItems.map((item) => (
             <li
               key={item.title}
-              className="bg-red-500 p-3 font-heading text-heading-sm font-heading-bold text-spamBlue"
+              className="p-3 font-heading text-heading-sm font-heading-bold text-spamBlue"
             >
               <NavLink to={item.link}>{item.title}</NavLink>
             </li>
