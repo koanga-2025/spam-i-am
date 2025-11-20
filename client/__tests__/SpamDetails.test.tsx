@@ -51,13 +51,13 @@ describe('<SpamDetails />', () => {
     const firstComment = await findByText(
       /A bit too salty for my taste, but still good in a pinch./i,
     )
-    const secondComment = await screen.findByText(
+    const secondComment = await findByText(
       /Not my favorite flavor, but it’s okay./i,
     )
-    const firstDate = await screen.findByText(
+    const firstDate = await findByText(
       /Created on: July 2, 2021 at 06:06 PM/i,
     )
-    const secondDate = await screen.findByText(
+    const secondDate = await findByText(
       /Created on: July 8, 2021 at 06:06 PM/i,
     )
 
