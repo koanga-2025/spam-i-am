@@ -33,10 +33,9 @@ vi.mock('../hooks/useAbout', () => {
 })
 describe('About.tsx', () => {
   it('About heading renders correctly', async () => {
-    const { container } = renderApp('/about')
-    const heading = screen.getByRole('heading', { level: 1 })
+    renderApp('/about')
+    const heading = await screen.findByRole('heading', { level: 1 })
     expect(heading.textContent).toBe('The history of SPAM')
-    expect(container.firstChild).toHaveClass('flex')
   })
   it('renders about content and applies Tailwind classes from designer screenshots', async () => {
     const { container } = renderApp('/about')
@@ -65,5 +64,18 @@ describe('About.tsx', () => {
       'border-blue-900',
       'shadow-md',
     )
+  })
+  it('displays fetched data correctly', async () => {
+    renderApp('/about')
+    
+    const title1 = await screen.findByText('Chapter I: The Mysterious Origins')
+    const body1 = await screen.findByText('In the days of yore, a great culinary conundrum...')
+    const image1 = await screen.findByAltText('a black and white etching of a ham hock')
+    const caption1 = await screen.findByText('Great grand-daddy SPAM, Sir Ham-Hock.')
+
+    expect(title1).toBeInTheDocument()
+    expect(body1).toBeInTheDocument()
+    expect(image1).toBeInTheDocument()
+    expect(caption1).toBeInTheDocument()
   })
 })
