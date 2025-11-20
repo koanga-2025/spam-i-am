@@ -3,7 +3,17 @@ import LoginButton from '../Nav/LoginButton'
 import { useState } from 'react'
 
 function Header() {
-  const [isActive, setIsActive] = useState(false)
+  const [isActive, setIsActive] = useState(true)
+
+  const handleResize = () => {
+    if (window.innerWidth >= 768) {
+      setIsActive(true)
+    } else {
+      setIsActive(false)
+    }
+  }
+
+  window.addEventListener('resize', handleResize)
 
   const menuItems = [
     { title: 'About', link: './about' },
