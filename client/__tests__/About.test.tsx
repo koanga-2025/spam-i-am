@@ -36,8 +36,7 @@ describe('About.tsx', () => {
     expect(mappedBody).toBeVisible()
     const sectionWrapper = mappedTitle.closest('section')
     expect(sectionWrapper).toBeTruthy()
-    if (sectionWrapper) {
-      expect(sectionWrapper).toHaveClass('mb-5', 'rounded-lg', 'border-2', 'border-blue-900')}
+     {expect(sectionWrapper).toHaveClass('mb-5', 'rounded-lg', 'border-2', 'border-blue-900')}
     const img = await screen.findByAltText(TEST_ABOUT_IMAGES[0].alt)
     expect(img).toBeVisible()
     expect(img).toHaveClass('rounded-lg', 'border-2', 'border-blue-900', 'shadow-md')})
