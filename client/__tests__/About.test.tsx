@@ -1,18 +1,33 @@
 // @vitest-environment jsdom
 
 import { renderApp } from '../test-setup.tsx'
-import { describe, it, expect, beforeEach } from 'vitest'
-import nock from 'nock'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mockAboutText, mockAboutImages } from './fixtures/mockData'
+
+// Mock the hooks
+vi.mock('../hooks/useAbout', () => ({
+  useAboutText: vi.fn(),
+  useAboutImages: vi.fn(),
+}))
+
+import { useAboutText, useAboutImages } from '../hooks/useAbout'
 
 describe('About.tsx', () => {
   beforeEach(() => {
-    // Mock the API responses for About page
-    nock('http://localhost').get('/api/v1/about/text').reply(200, mockAboutText)
-
-    nock('http://localhost')
-      .get('/api/v1/about/images')
-      .reply(200, mockAboutImages)
+    vi.mocked(useAboutText).mockReturnValue({
+      data: mockAboutText,
+      isLoading: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as any)
+    vi.mocked(useAboutImages).mockReturnValue({
+      data: mockAboutImages,
+      isLoading: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as any)
   })
 
   it('About heading renders correctly', async () => {
@@ -32,11 +47,13 @@ describe('About.tsx', () => {
     const { findByText, ...screen } = renderApp('/about')
 
     // ASSERT
-    const title2 = await findByText('Test Title 2')
-    const body1 = await findByText('Test body 1')
-    const image1 = await screen.findByAltText('Test Alt 1')
-    const caption1 = await findByText('Test Caption 1')
+    const title1 = await findByText('The Origins')
+    const title2 = await findByText('World War II')
+    const body1 = await findByText('SPAM was first introduced in 1937...')
+    const image1 = await screen.findByAltText('Original SPAM can')
+    const caption1 = await findByText('The iconic SPAM can design')
 
+    expect(title1).toBeInTheDocument()
     expect(title2).toBeInTheDocument()
     expect(body1).toBeInTheDocument()
     expect(image1).toBeInTheDocument()
