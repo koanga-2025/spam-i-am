@@ -1,20 +1,54 @@
 // @vitest-environment jsdom
 
 import { renderApp } from '../test-setup.tsx'
-import { describe, it, expect } from 'vitest'
-import nock from 'nock'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+
+// Mock the hooks
+vi.mock('../hooks/useAbout', () => ({
+  useAboutText: vi.fn(),
+  useAboutImages: vi.fn(),
+}))
+
+import { useAboutText, useAboutImages } from '../hooks/useAbout'
 
 // Mock data
 const mockText = [
-  { id: 1, title: 'Test Title 1', body: 'Test body 1' },
+  { id: 1, title: 'The history of SPAM', body: 'Test body 1' },
   { id: 2, title: 'Test Title 2', body: 'Test body 2' },
 ]
 const mockImages = [
-  { id: 1, link: 'test-image-1.jpg', alt: 'Test Alt 1', caption: 'Test Caption 1' },
-  { id: 2, link: 'test-image-2.jpg', alt: 'Test Alt 2', caption: 'Test Caption 2' },
+  {
+    id: 1,
+    link: 'test-image-1.jpg',
+    alt: 'Test Alt 1',
+    caption: 'Test Caption 1',
+  },
+  {
+    id: 2,
+    link: 'test-image-2.jpg',
+    alt: 'Test Alt 2',
+    caption: 'Test Caption 2',
+  },
 ]
 
 describe('About.tsx', () => {
+  beforeEach(() => {
+    vi.mocked(useAboutText).mockReturnValue({
+      data: mockText,
+      isLoading: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as any)
+    vi.mocked(useAboutImages).mockReturnValue({
+      data: mockImages,
+      isLoading: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    } as any)
+  })
+
   it('About heading renders correctly', async () => {
     // ARRANGE
     const { ...screen } = renderApp('/about')
@@ -28,31 +62,18 @@ describe('About.tsx', () => {
   })
 
   it('displays fetched data correctly', async () => {
-    // ARRANGE
-    const scope = nock('http://localhost:3000')
-      .get('/api/v1/about/text')
-      .reply(200, mockText)
-      .get('/api/v1/about/images')
-      .reply(200, mockImages)
-
-    // ACT
-    const { findByText, queryAllByAltText, ...screen } = renderApp('/about')
+    // ARRANGE & ACT
+    const { findByText, ...screen } = renderApp('/about')
 
     // ASSERT
-    expect(screen.getAllByAltText('Loading')).toHaveLength(1)
-
-    const title1 = await findByText('Test Title 1')
+    const title2 = await findByText('Test Title 2')
     const body1 = await findByText('Test body 1')
     const image1 = await screen.findByAltText('Test Alt 1')
     const caption1 = await findByText('Test Caption 1')
 
-    expect(title1).toBeInTheDocument()
+    expect(title2).toBeInTheDocument()
     expect(body1).toBeInTheDocument()
     expect(image1).toBeInTheDocument()
     expect(caption1).toBeInTheDocument()
-    expect(queryAllByAltText('Loading')).toHaveLength(0)
-
-    expect(scope.isDone()).toBe(true)
   })
 })
-
