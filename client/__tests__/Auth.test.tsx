@@ -2,6 +2,8 @@
 import { renderApp } from '../test-setup.tsx'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { useAuth0 } from '@auth0/auth0-react'
+import nock from 'nock'
+import { mockUser, mockSpams } from './fixtures/mockData'
 
 vi.mock('@auth0/auth0-react')
 
@@ -15,6 +17,16 @@ beforeEach(() => {
     loginWithRedirect: vi.fn(),
     logout: vi.fn(),
   } as any)
+
+  // Mock the user creation API call
+  nock('http://localhost')
+    .post('/api/v1/users')
+    .reply(200, mockUser)
+
+  // Mock the spams API call (home page renders InfiniteBanner which fetches spams)
+  nock('http://localhost')
+    .get('/api/v1/spams')
+    .reply(200, mockSpams)
 })
 
 afterEach(() => {
