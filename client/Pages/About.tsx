@@ -13,46 +13,50 @@ function About() {
   } = useAboutImages()
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-8 text-center text-4xl font-bold">
-        The history of SPAM
-      </h1>
-      {(isTextLoading || areImagesLoading) && <LoadingSpinner />}
-      {(isTextError || areImagesError) && (
-        <p className="text-center text-sm text-gray-600">
-          There was an error loading the page content.
-        </p>
-      )}
-      {spamHistory && images ? (
-        <>
-          <section className="mb-12">
-            <article className="mx-auto max-w-4xl">
+    <div className="flex gap-8 p-8">
+      <section className="flex-[5]">
+        <article>
+          <h1 className="mb-6 text-center font-heading text-5xl font-extrabold text-blue-900">
+            The history of SPAM
+          </h1>
+          {(isTextLoading || areImagesLoading) && <LoadingSpinner />}
+          {(isTextError || areImagesError) && (
+            <p className="text-center text-sm text-gray-600">
+              There was an error loading the page content.
+            </p>
+          )}
+          {spamHistory && images ? (
+            <>
               {spamHistory.map((section, id) => (
-                <section key={id} className="mb-6">
-                  <h2 className="mb-3 text-2xl font-semibold">
+                <section
+                  key={id}
+                  className="mb-5 rounded-lg border-2 border-blue-900"
+                >
+                  <h2 className="mb-6 mt-6 font-heading text-4xl font-extrabold">
                     {section.title}
                   </h2>
-                  <p className="text-lg leading-relaxed">{section.body}</p>
+                  <p className="font-body text-2xl">{section.body}</p>
                 </section>
               ))}
-            </article>
-          </section>
-          <section className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            {images.map((image, id) => (
-              <div key={id} className="text-center">
-                <img
-                  src={`/images/${image.link}`}
-                  alt={image.alt}
-                  className="mb-2 w-full object-cover"
-                />
-                <p className="text-sm text-gray-600">
-                  <em>{image.caption}</em>
-                </p>
-              </div>
-            ))}
-          </section>
-        </>
-      ) : null}
+            </>
+          ) : null}
+        </article>
+      </section>
+
+      <section className="flex-[1]">
+        {images?.map((image, id) => (
+          <div key={id} className="mb-6">
+            <img
+              src={`/images/${image.link}`}
+              alt={image.alt}
+              className="rounded-lg border-2 border-blue-900 shadow-md"
+            />
+            <p>
+              <em>{image.caption}</em>
+            </p>
+          </div>
+        ))}
+      </section>
     </div>
   )
 }
