@@ -43,10 +43,12 @@ describe('About.tsx', () => {
 
     const title1 = await findByText('Test Title 1')
     const body1 = await findByText('Test body 1')
+    const image1 = await screen.findByAltText('Test Alt 1')
     const caption1 = await findByText('Test Caption 1')
 
     expect(title1).toBeInTheDocument()
     expect(body1).toBeInTheDocument()
+    expect(image1).toBeInTheDocument()
     expect(caption1).toBeInTheDocument()
     expect(queryAllByAltText('Loading')).toHaveLength(0)
 
