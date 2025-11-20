@@ -1,5 +1,6 @@
 import { useAboutText, useAboutImages } from '../hooks/useAbout'
 import LoadingSpinner from '../components/UI/LoadingSpinner'
+
 function About() {
   const {
     data: spamHistory,
@@ -13,7 +14,7 @@ function About() {
   } = useAboutImages()
 
   return (
-    <div className="flex gap-8 p-8">
+    <main className="flex gap-8 p-8">
       <section className="flex-[5]">
         <article>
           <h1 className="mb-6 text-center font-heading text-5xl font-extrabold text-blue-900">
@@ -57,7 +58,7 @@ function About() {
           </div>
         ))}
       </section>
-    </div>
+    </main>
   )
 }
 
