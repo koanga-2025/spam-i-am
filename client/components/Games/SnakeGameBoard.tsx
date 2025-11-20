@@ -119,19 +119,21 @@ export default function SnakeGameBoard({
           onKeyDown={handleKeyDown}
           className="border-4 border-solid border-spamYellow"
         >
-          {nums.map((row) => (
-            <tr key={row}>
-              {nums.map((column) => {
-                const coord = `${row}${column}`
-                return (
-                  <td
-                    key={coord}
-                    className={`${coord} h-4 w-4 ${snake.includes(coord) ? 'bg-lime-400' : obstacles.includes(coord) ? 'bg-white' : food === coord ? 'bg-spamPink' : 'bg-spamBlue'}`}
-                  ></td>
-                )
-              })}
-            </tr>
-          ))}
+          <tbody>
+            {nums.map((row) => (
+              <tr key={row}>
+                {nums.map((column) => {
+                  const coord = `${row}${column}`
+                  return (
+                    <td
+                      key={coord}
+                      className={`${coord} h-4 w-4 ${snake.includes(coord) ? 'bg-lime-400' : obstacles.includes(coord) ? 'bg-white' : food === coord ? 'bg-spamPink' : 'bg-spamBlue'}`}
+                    ></td>
+                  )
+                })}
+              </tr>
+            ))}
+          </tbody>
         </table>
       )}
     </div>
