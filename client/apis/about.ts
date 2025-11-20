@@ -2,7 +2,7 @@ import request from 'superagent'
 import { AboutText, AboutImages } from '../../models/spam'
 import { logError } from './api-utils'
 
-const rootUrl = new URL(`/api/v1`, document.baseURI)
+const rootUrl = '/api/v1'
 
 export function getAllAboutText() {
   return request

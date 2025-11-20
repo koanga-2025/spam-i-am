@@ -5,9 +5,22 @@
 //  --------------
 
 import { renderApp } from '../test-setup.tsx'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
+import nock from 'nock'
+import { mockAboutText, mockAboutImages } from './fixtures/mockData'
 
 describe('About.tsx', () => {
+  beforeEach(() => {
+    // Mock the API responses for About page
+    nock('http://localhost')
+      .get('/api/v1/about/text')
+      .reply(200, mockAboutText)
+
+    nock('http://localhost')
+      .get('/api/v1/about/images')
+      .reply(200, mockAboutImages)
+  })
+
   it('About heading renders correctly', async () => {
     // ARRANGE
     const { ...screen } = renderApp('/about')
