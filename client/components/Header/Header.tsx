@@ -3,13 +3,18 @@ import LoginButton from '../Nav/LoginButton'
 import { useEffect, useState } from 'react'
 
 function Header() {
-  const [isActive, setIsActive] = useState(true)
+  const [isNavOpen, setIsNavOpen] = useState(false)
+  const [isSmall, setIsSmall] = useState(true)
 
   const handleResize = () => {
     if (window.innerWidth >= 768) {
-      setIsActive(true)
+      // if screen is large
+      setIsSmall(false)
+      setIsNavOpen(true)
     } else {
-      setIsActive(false)
+      // if screen is small
+      setIsSmall(true)
+      setIsNavOpen(false)
     }
   }
 
@@ -28,12 +33,17 @@ function Header() {
     { title: 'Rate That Spam!', link: './rate-spam' },
   ]
 
-  const navClass = `${isActive ? 'block' : 'hidden'}`
+  const navClass = `${isNavOpen ? 'block bg-spamYellow' : 'hidden'}`
+  const navClass2 = `${isNavOpen && isSmall ? 'absolute top-20 rounded-xl place-content-center' : ''}`
+  const navClass3 = `${!isSmall && isNavOpen ? 'space-x-3' : ''}`
 
   return (
     <header className="bg-spamYellow px-3">
       <nav className="flex items-center justify-center md:justify-between">
-        <button onClick={() => setIsActive(!isActive)} className={`md:hidden`}>
+        <button
+          onClick={() => setIsNavOpen(!isNavOpen)}
+          className={`md:hidden`}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -57,12 +67,12 @@ function Header() {
           />
         </NavLink>
         <ul
-          className={`flex flex-col items-center space-x-3 md:flex-row ${navClass}`}
+          className={`flex flex-col items-center md:flex-row ${navClass} ${navClass2} ${navClass3}`}
         >
           {menuItems.map((item) => (
             <li
               key={item.title}
-              className="p-3 font-heading text-heading-sm font-heading-bold text-spamBlue"
+              className="bg-red-500 p-3 font-heading text-heading-sm font-heading-bold text-spamBlue"
             >
               <NavLink to={item.link}>{item.title}</NavLink>
             </li>
