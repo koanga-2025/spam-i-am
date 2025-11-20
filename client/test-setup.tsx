@@ -1,4 +1,4 @@
-import { beforeEach, expect, beforeAll, afterEach } from 'vitest'
+import { beforeEach, expect, beforeAll, afterAll, afterEach } from 'vitest'
 import { cleanup, render } from '@testing-library/react'
 import * as matchers from '@testing-library/jest-dom/matchers'
 import '@testing-library/jest-dom/vitest'
@@ -10,18 +10,21 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import userEvent from '@testing-library/user-event'
 import { routes } from './routes'
 
+// Store original methods for restoration
+const originalConsoleWarn = console.warn
+const originalSuperagentMethods: Record<string, Function> = {}
+
 // Disable all network connections in tests by default
 // Individual tests can override this with their own nock setup
 beforeAll(() => {
   nock.disableNetConnect()
 
   // Suppress React Router v7 migration warnings in tests
-  const originalWarn = console.warn
   console.warn = (...args) => {
     if (args[0]?.includes?.('React Router Future Flag Warning')) {
       return // Suppress React Router v7 migration warnings
     }
-    originalWarn(...args)
+    originalConsoleWarn(...args)
   }
 
   // Intercept superagent methods to prepend base URL to relative paths
@@ -29,13 +32,28 @@ beforeAll(() => {
   const httpMethods = ['get', 'post', 'put', 'delete', 'patch'] as const
 
   httpMethods.forEach(method => {
-    const original = superagent[method].bind(superagent)
+    // Store original method for cleanup
+    originalSuperagentMethods[method] = superagent[method].bind(superagent)
 
-    superagent[method] = (url: string) => {
+    // Replace with interceptor that forwards all arguments
+    superagent[method] = (url: string, ...args: any[]) => {
       if (typeof url === 'string' && url.startsWith('/')) {
-        return original(`${baseUrl}${url}`)
+        return originalSuperagentMethods[method](`${baseUrl}${url}`, ...args)
       }
-      return original(url)
+      return originalSuperagentMethods[method](url, ...args)
+    }
+  })
+})
+
+afterAll(() => {
+  // Restore original console.warn
+  console.warn = originalConsoleWarn
+
+  // Restore original superagent methods
+  const httpMethods = ['get', 'post', 'put', 'delete', 'patch'] as const
+  httpMethods.forEach(method => {
+    if (originalSuperagentMethods[method]) {
+      superagent[method] = originalSuperagentMethods[method]
     }
   })
 })
