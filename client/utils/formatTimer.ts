@@ -4,7 +4,7 @@ function formatTime(seconds: number): string {
   return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`
 }
 
-export function formatDate(timestamp: number): string {
+export function formatDateTime(timestamp: number): string {
   const date = new Date(timestamp)
   return date.toLocaleDateString('en-US', {
     year: 'numeric',

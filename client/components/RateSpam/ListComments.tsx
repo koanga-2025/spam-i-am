@@ -1,5 +1,5 @@
 import { useComments } from '../../hooks/useComments'
-import { formatDate } from '../../utils/formatTimer'
+import { formatDateTime } from '../../utils/formatTimer'
 import ErrorPage from '../../Pages/ErrorPage'
 
 interface Props {
@@ -22,11 +22,9 @@ function ListComments({ spamId }: Props) {
         {comments?.map((comment) => (
           <li key={comment.id}>
             {comment.comment_text}
-            <br />
-            Created on: {formatDate(comment.created_date)}
+            Created on: {formatDateTime(comment.created_date)}
           </li>
         ))}
-        <br></br>
       </ul>
     </>
   )
