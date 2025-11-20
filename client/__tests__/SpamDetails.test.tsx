@@ -45,10 +45,10 @@ describe('<SpamDetails />', () => {
       TEST_COMMENTS_DATA,
     )
 
-    const { ...screen } = renderApp('/rate-spam/2')
+    const { findByText } = renderApp('/rate-spam/2')
 
     //ACT
-    const firstComment = await screen.findByText(
+    const firstComment = await findByText(
       /A bit too salty for my taste, but still good in a pinch./i,
     )
     const secondComment = await screen.findByText(
