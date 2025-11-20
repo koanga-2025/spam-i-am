@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import LoginButton from '../Nav/LoginButton'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function Header() {
   const [isActive, setIsActive] = useState(true)
@@ -13,7 +13,13 @@ function Header() {
     }
   }
 
-  window.addEventListener('resize', handleResize)
+  useEffect(() => {
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   const menuItems = [
     { title: 'About', link: './about' },
