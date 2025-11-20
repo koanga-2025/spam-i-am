@@ -1,37 +1,44 @@
 // @vitest-environment jsdom
-
-//  --------------
-// GOOD EXAMPLE OF A *BASIC* COMPONENT TEST
-//  --------------
-
+import { vi, describe, it, expect } from 'vitest'
 import { renderApp } from '../test-setup.tsx'
-import { describe, it, expect, beforeEach } from 'vitest'
-import nock from 'nock'
-import { mockAboutText, mockAboutImages } from './fixtures/mockData'
-
+import { screen } from '@testing-library/react'
+const TEST_ABOUT_TEXT = [
+  {
+    id: 1,
+    title: 'Chapter I: The Mysterious Origins',
+    body: 'In the days of yore, a great culinary conundrum...',
+  }]
+const TEST_ABOUT_IMAGES = [
+  {
+    id: 1,
+    link: 'vintage_ham.jpeg',
+    alt: 'a black and white etching of a ham hock',
+    caption: 'Great grand-daddy SPAM, Sir Ham-Hock.',
+  }]
+vi.mock('../hooks/useAbout', () => {
+  return {
+    useAboutText: () => ({ data: TEST_ABOUT_TEXT, isLoading: false, isError: false }),
+    useAboutImages: () => ({ data: TEST_ABOUT_IMAGES, isLoading: false, isError: false })}})
 describe('About.tsx', () => {
-  beforeEach(() => {
-    // Mock the API responses for About page
-    nock('http://localhost')
-      .get('/api/v1/about/text')
-      .reply(200, mockAboutText)
-
-    nock('http://localhost')
-      .get('/api/v1/about/images')
-      .reply(200, mockAboutImages)
-  })
-
   it('About heading renders correctly', async () => {
-    // ARRANGE
-    const { ...screen } = renderApp('/about')
-    const heading = screen.getByRole('heading', {
-      level: 1,
-    })
-    // ACT
-    // Not necessary in this test
-    // ASSERT
+    const { container } = renderApp('/about')
+    const heading = screen.getByRole('heading', { level: 1 })
     expect(heading.textContent).toBe('The history of SPAM')
-  })
-  // TODO: add another test to see if you see the real data from the database rendered on the page
+    expect(container.firstChild).toHaveClass('flex')})
+  it('renders about content and applies Tailwind classes from designer screenshots', async () => {
+    const { container } = renderApp('/about')
+    const root = container.querySelector('main.flex')
+    expect(root).toBeInTheDocument()
+    expect(root).toHaveClass('flex', 'gap-8', 'p-8')
+    const mappedTitle = await screen.findByText(TEST_ABOUT_TEXT[0].title)
+    const mappedBody = await screen.findByText(TEST_ABOUT_TEXT[0].body)
+    expect(mappedTitle).toBeVisible()
+    expect(mappedBody).toBeVisible()
+    const sectionWrapper = mappedTitle.closest('section')
+    expect(sectionWrapper).toBeTruthy()
+     {expect(sectionWrapper).toHaveClass('mb-5', 'rounded-lg', 'border-2', 'border-blue-900')}
+    const img = await screen.findByAltText(TEST_ABOUT_IMAGES[0].alt)
+    expect(img).toBeVisible()
+    expect(img).toHaveClass('rounded-lg', 'border-2', 'border-blue-900', 'shadow-md')})
 })
 
