@@ -1,7 +1,10 @@
 import { NavLink } from 'react-router-dom'
 import LoginButton from '../Nav/LoginButton'
+import { useState } from 'react'
 
 function Header() {
+  const [isActive, setIsActive] = useState(false)
+
   const menuItems = [
     { title: 'About', link: './about' },
     { title: 'Games', link: './games' },
@@ -9,17 +12,31 @@ function Header() {
     { title: 'Rate That Spam!', link: './rate-spam' },
   ]
 
+  const navClass = `${isActive ? 'block' : 'hidden'}`
+
+  const buttonClass = `${isActive ? 'hidden' : 'block'}`
+  // const handleClick = () => {}
+
   return (
     <header className="bg-spamYellow px-3">
-      <nav className="flex items-center justify-between">
+      <nav className="flex items-center justify-center md:justify-between">
+        <button onClick={() => setIsActive(!isActive)} className={`md:hidden`}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-10">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
         <NavLink to="/">
+          {/* <button onClick={() => setIsActive(!isActive)} className={`md:hidden`}> */}
           <img
             src="/images/classic_spam_transparent.png"
             alt="a beautiful classic can of spam"
             className="duration-400 w-24 transform p-3 transition hover:animate-rotate360"
           />
+          {/* </button> */}
         </NavLink>
-        <ul className="flex items-center space-x-3">
+        <ul
+          className={`flex flex-col items-center space-x-3 md:flex-row ${navClass}`}
+        >
           {menuItems.map((item) => (
             <li
               key={item.title}
@@ -35,3 +52,19 @@ function Header() {
   )
 }
 export default Header
+
+// const buttonClasses = `
+//     p-3 rounded-md
+//     ${isActive ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}
+//     hover:opacity-80
+//   `;
+
+//   return (
+//     <button
+//       className={buttonClasses}
+//       onClick={() => setIsActive(!isActive)}
+//     >
+//       Toggle Active State
+//     </button>
+//   );
+// };
