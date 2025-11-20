@@ -39,7 +39,7 @@ describe('About.tsx', () => {
     const { findByText, queryAllByAltText, ...screen } = renderApp('/about')
 
     // ASSERT
-    expect(screen.getAllByAltText('Loading')).toHaveLength(2)
+    expect(screen.getAllByAltText('Loading')).toHaveLength(1)
 
     const title1 = await findByText('Test Title 1')
     const body1 = await findByText('Test body 1')
