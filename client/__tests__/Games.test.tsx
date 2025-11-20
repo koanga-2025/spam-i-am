@@ -27,7 +27,6 @@ describe('Games.tsx', () => {
       name: 'Spam Jump',
     })
     // ACT
-    console.log(button)
 
     await user.click(button)
     // 'screen.debug()' is a useful way to see what is happening on the UI
