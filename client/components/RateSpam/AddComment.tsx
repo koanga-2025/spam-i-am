@@ -30,24 +30,29 @@ export default function AddComment() {
     )
   }
   return (
-    <>
-      <div>Add Comment</div>
-      <form onSubmit={handleSubmit}>
+    <div className="my-4">
+      <h3 className="text-lg font-bold mb-2">Add a Comment</h3>
+      <form onSubmit={handleSubmit} className="flex items-center">
         <input
-          className="rounded border border-spamBlue"
+          className="flex-grow p-2 border rounded-l-md"
+          placeholder="Share your thoughts..."
           aria-label="Add a comment"
           id="add-comment"
           value={comment}
           onChange={handleChange}
           disabled={addCommentMutation.isPending}
         />
-        <button type="submit" disabled={addCommentMutation.isPending}>
+        <button
+          type="submit"
+          disabled={addCommentMutation.isPending}
+          className="bg-spamBlue text-white px-4 py-2 rounded-r-md hover:bg-spamBlue-dark disabled:bg-gray-400"
+        >
           {addCommentMutation.isPending ? 'Adding...' : 'Add'}
         </button>
       </form>
       {addCommentMutation.isError && (
-        <p style={{ color: 'red' }}>Error: Could not add comment.</p>
+        <p className="text-red-500 mt-2">Error: Could not add comment.</p>
       )}
-    </>
+    </div>
   )
 }
