@@ -27,3 +27,10 @@ export async function createComment(
 // TODO: Update Comment
 
 // TODO: Delete Comment
+export async function deleteComment(
+  commentId: number,
+  userId: string,
+  db = connection,
+) {
+  return db('comments').where({ id: commentId, user_id: userId }).del()
+}
