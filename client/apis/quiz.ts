@@ -8,17 +8,13 @@ const rootUrl = '/api/v1'
 export async function getAllQuestions() {
   return request
     .get(`${rootUrl}/quiz`)
-    .then((res) => {
-      return res.body as QuizQuestions[]
-    })
+    .then((res) => res.body as QuizQuestions[])
     .catch(logError)
 }
 
 export function getQuizResult(category: string) {
   return request
     .get(`${rootUrl}/quiz/${category}`)
-    .then((res) => {
-      return res.body as QuizResult
-    })
+    .then((res) => res.body as QuizResult)
     .catch(logError)
 }
