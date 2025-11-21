@@ -76,7 +76,7 @@ function Header() {
               key={item.title}
               className="p-3 font-heading text-heading-sm font-heading-bold text-spamBlue"
             >
-              <NavLink to={item.link}>{item.title}</NavLink>
+              <button onClick={()=> {window.innerWidth < 768  && setIsNavOpen(false)}}><NavLink to={item.link}>{item.title}</NavLink></button>
             </li>
           ))}
           <LoginButton />
