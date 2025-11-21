@@ -13,6 +13,7 @@ function ResultPage({ answers }: Props) {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    let isMounted = true
     const fetchResult = async () => {
       try {
         setLoading(true)
@@ -21,18 +22,26 @@ function ResultPage({ answers }: Props) {
         const category = calculateQuiz(answers)
 
         const quizResult = await getQuizResult(category)
-        if (quizResult) {
+        if (isMounted && quizResult) {
           setResult(quizResult)
         }
       } catch (err) {
-        setError('Failed to load quiz results')
-        console.error('Error fetching quiz result:', err)
+        if (isMounted) {
+          setError('Failed to load quiz results')
+          console.error('Error fetching quiz result:', err)
+        }
       } finally {
-        setLoading(false)
+        if (isMounted) {
+          setLoading(false)
+        }
       }
     }
 
     fetchResult()
+
+    return () => {
+      isMounted = false
+    }
   }, [answers])
 
   if (loading) {
