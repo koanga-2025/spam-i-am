@@ -13,6 +13,13 @@ export async function getAvgRatingBySpamId(spamId: number, db = connection) {
     .groupBy('spam_id')
 }
 
+export async function getAllAvgRatings(db = connection) {
+  return db('ratings')
+    .select('spam_id')
+    .avg('rating as average_rating')
+    .groupBy('spam_id')
+}
+
 export async function addRating(
   spamId: number,
   rating: number,
