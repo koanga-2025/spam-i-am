@@ -32,9 +32,9 @@ function Header() {
     { title: 'Quiz', link: './quiz' },
     { title: 'Rate That Spam!', link: './rate-spam' },
   ]
-  
+
   return (
-    <header className="bg-spamYellow px-3">
+    <header className="z-10 bg-spamYellow px-3">
       <nav className="flex items-center justify-center md:justify-between">
         <button
           onClick={() => setIsNavOpen(!isNavOpen)}
@@ -63,9 +63,13 @@ function Header() {
           />
         </NavLink>
         <ul
-          className={`flex flex-col items-center md:flex-row ${isNavOpen ? 'block bg-spamYellow' : 'hidden' // if nav is open or closed
-            } ${isNavOpen && isSmall ? 'absolute top-20 rounded-xl place-content-center' : 'space-x-3' // additional classes for small screens when nav is open
-            } `}
+          className={`flex flex-col items-center md:flex-row ${
+            isNavOpen ? 'block bg-spamYellow' : 'hidden' // if nav is open or closed
+          } ${
+            isNavOpen && isSmall
+              ? 'absolute top-20 place-content-center rounded-xl'
+              : 'space-x-3' // additional classes for small screens when nav is open
+          } `}
         >
           {menuItems.map((item) => (
             <li
