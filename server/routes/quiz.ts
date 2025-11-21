@@ -22,7 +22,7 @@ router.get('/:category', async (req, res) => {
     res.json(result)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Server error retrieving questions' })
+    res.status(500).json({ message: 'Server error retrieving quiz result' })
   }
 })
 
