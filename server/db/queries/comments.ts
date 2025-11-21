@@ -6,6 +6,10 @@ export async function getCommentsBySpamId(spamId: number, db = connection) {
   return db('comments').where({ spam_id: spamId })
 }
 
+export async function getCommentById(commentId: number, db = connection) {
+  return db('comments').where({ id: commentId }).first()
+}
+
 // TODO: Create a Comment:
 
 export async function createComment(

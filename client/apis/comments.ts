@@ -30,3 +30,11 @@ export async function addComment(commentObj: AddComment) {
     })
     .catch(logError)
 }
+
+export async function deleteComment(commentId: number, token: string) {
+  return request
+    .delete(`${rootUrl}/comments/${commentId}`)
+    .set('Authorization', `Bearer ${token}`)
+    .then((res) => res.body.spamId as number) // Expecting { spamId: number } from the backend
+    .catch(logError)
+}
