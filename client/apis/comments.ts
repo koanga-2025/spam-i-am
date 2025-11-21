@@ -35,6 +35,11 @@ export async function deleteComment(commentId: number, token: string) {
   return request
     .delete(`${rootUrl}/comments/${commentId}`)
     .set('Authorization', `Bearer ${token}`)
-    .then((res) => res.body.spamId as number) // Expecting { spamId: number } from the backend
+    .then((res) => {
+      if (res.body && typeof res.body.spamId === 'number') {
+        return res.body.spamId
+      }
+      throw new Error('Invalid API response when deleting comment.')
+    })
     .catch(logError)
 }

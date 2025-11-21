@@ -29,8 +29,11 @@ export function useDeleteComment() {
   return useMutation({
     mutationFn: async ({ commentId, token }: { commentId: number, token: string }) =>
       deleteComment(commentId, token),
-    onSuccess: (deletedSpamId) => {
-      queryClient.invalidateQueries({ queryKey: ['comments', deletedSpamId] })
+    onSuccess: (deletedSpamId, { commentId }) => {
+      queryClient.setQueryData<CommentData[] | undefined>(
+        ['comments', deletedSpamId],
+        (oldData) => oldData?.filter((comment) => comment.id !== commentId),
+      )
     },
   })
 }
