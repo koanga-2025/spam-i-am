@@ -21,6 +21,6 @@ export async function addComment(commentObj: AddComment) {
     .post(`${rootUrl}/comments/`)
     .set('Authorization', `Bearer ${token}`)
     .send({ comment: comment, spamId: spamId })
-    .then((res) => res.body as CommentData)
+    .then((res) => res.body.newComment[0] as CommentData)
     .catch(logError)
 }
