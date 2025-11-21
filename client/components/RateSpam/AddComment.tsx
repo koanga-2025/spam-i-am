@@ -1,31 +1,53 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useAuth0 } from '@auth0/auth0-react'
+import { useAddComment } from '../../hooks/useComments'
 
 export default function AddComment() {
-  //  TODO: create form state
-  //  TODO: get id from params
-  //  TODO: Call custom hook for addMutation
+  const [comment, setComment] = useState('')
+  const { id } = useParams()
+  const spamId = Number(id)
+  const addCommentMutation = useAddComment()
+  const { getAccessTokenSilently } = useAuth0()
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    // TODO: Update form state
+    setComment(event.target.value)
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    // TODO: get access token
+    if (!comment.trim()) return
+    if (!spamId) return
 
-    // TODO: if the params id exists, call our custom hook mutation
-    // and give it an object with: form data, spamId and token
+    const token = await getAccessTokenSilently()
+    addCommentMutation.mutate(
+      { comment, spamId, token },
+      {
+        onSuccess: () => {
+          setComment('')
+        },
+      },
+    )
   }
   return (
     <>
       <div>Add Comment</div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
-          className="rounded border  border-spamBlue"
+          className="rounded border border-spamBlue"
           aria-label="Add a comment"
           id="add-comment"
-        ></input>
+          value={comment}
+          onChange={handleChange}
+          disabled={addCommentMutation.isPending}
+        />
+        <button type="submit" disabled={addCommentMutation.isPending}>
+          {addCommentMutation.isPending ? 'Adding...' : 'Add'}
+        </button>
       </form>
+      {addCommentMutation.isError && (
+        <p style={{ color: 'red' }}>Error: Could not add comment.</p>
+      )}
     </>
   )
 }

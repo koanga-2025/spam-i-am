@@ -1,7 +1,6 @@
-import { useQuery } from '@tanstack/react-query'
-import { getAllCommentsBySpamId } from '../apis/comments'
-
-// TODO: Create custom hook for querying the comments by spamId
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { getAllCommentsBySpamId, addComment } from '../apis/comments'
+import { AddComment, CommentData } from '../../models/spam'
 
 export function useComments(spamId: number) {
   return useQuery({
@@ -10,4 +9,17 @@ export function useComments(spamId: number) {
   })
 }
 
-// TODO: Create custom hook for adding a new comment
+export function useAddComment() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (comment: AddComment) => addComment(comment),
+    onSuccess: (newComment, variables) => {
+      queryClient.setQueryData(
+        ['comments', variables.spamId],
+        (oldData: CommentData[] | undefined) => {
+          return oldData ? [...oldData, newComment] : [newComment]
+        },
+      )
+    },
+  })
+}
