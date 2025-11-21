@@ -16,6 +16,7 @@ export default function AddComment() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    if (!comment.trim()) return
     if (!spamId) return
     if (!comment.trim()) return
 
