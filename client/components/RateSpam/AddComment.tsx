@@ -18,7 +18,6 @@ export default function AddComment() {
     event.preventDefault()
     if (!comment.trim()) return
     if (!spamId) return
-    if (!comment.trim()) return
 
     const token = await getAccessTokenSilently()
     addCommentMutation.mutate(
