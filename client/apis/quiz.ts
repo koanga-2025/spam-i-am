@@ -14,5 +14,11 @@ export async function getAllQuestions() {
     .catch(logError)
 }
 
-// TODO: Write a request to get the quiz result data by category from the backend
-export async function getQuizResult(category: string) {}
+export function getQuizResult(category: string) {
+  return request
+    .get(`${rootUrl}/quiz/${category}`)
+    .then((res) => {
+      return res.body as QuizResult
+    })
+    .catch(logError)
+}
