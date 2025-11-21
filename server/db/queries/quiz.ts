@@ -1,4 +1,5 @@
 import connection from '../connection'
+import db from '../connection' 
 // QUIZ
 export async function getAllQuestionsAndOptions(db = connection) {
   try {
@@ -41,4 +42,8 @@ export async function getAllQuestionsAndOptions(db = connection) {
 
 // TODO:
 // Create a function to get quiz results by category
-export async function getQuizResultByCategory() {}
+export async function getQuizResultByCategory(category:string) {
+  return db('results')
+    .where({ category })
+    .first()
+}
