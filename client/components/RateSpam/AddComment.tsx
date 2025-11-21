@@ -17,6 +17,7 @@ export default function AddComment() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!spamId) return
+    if (!comment.trim()) return
 
     const token = await getAccessTokenSilently()
     addCommentMutation.mutate({ comment, spamId, token })
