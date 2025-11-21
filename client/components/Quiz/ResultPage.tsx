@@ -79,7 +79,5 @@ function ResultPage({ answers }: Props) {
       </>
     )
   }
-
-  return null
 }
 export default ResultPage
