@@ -21,7 +21,9 @@ function ResultPage({ answers }: Props) {
         const category = calculateQuiz(answers)
 
         const quizResult = await getQuizResult(category)
-        setResult(quizResult)
+        if (quizResult) {
+          setResult(quizResult)
+        }
       } catch (err) {
         setError('Failed to load quiz results')
         console.error('Error fetching quiz result:', err)
