@@ -17,7 +17,9 @@ function LoginButton() {
     <>
       <IfAuthenticated>
         <Button onClick={handleSignOut}>Sign out</Button>
-        {user && <p>Signed in as: {user?.nickname}</p>}
+        {user && (
+          <p className="mb-3 ml-3 mr-3">Signed in as: {user?.nickname}</p>
+        )}
       </IfAuthenticated>
       <IfNotAuthenticated>
         <Button onClick={handleSignIn}>Sign in</Button>
