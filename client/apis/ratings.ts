@@ -24,6 +24,15 @@ export async function getAvgRatingById(spamId: number) {
     .catch(logError)
 }
 
+export async function getAllAvgRatings() {
+  return request
+    .get(`${rootUrl}/ratings/avg/all`)
+    .then((res) => {
+      return res.body as { spam_id: number; average_rating: number }[]
+    })
+    .catch(logError)
+}
+
 export async function addRating(ratingObj: AddRating) {
   const { spamId, rating, token } = ratingObj
   return request

@@ -16,6 +16,18 @@ router.get('/', async (req, res) => {
   }
 })
 
+// All spam average ratings:
+// GET /api/v1/ratings/avg/all
+router.get('/avg/all', async (req, res) => {
+  try {
+    const avgRatings = await db.getAllAvgRatings()
+    res.json(avgRatings)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Oops no ratings' })
+  }
+})
+
 // Single spam rating:
 // GET /api/v1/ratings/:spamId
 router.get('/:spamId', async (req, res) => {
