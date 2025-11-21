@@ -21,6 +21,12 @@ export async function addComment(commentObj: AddComment) {
     .post(`${rootUrl}/comments/`)
     .set('Authorization', `Bearer ${token}`)
     .send({ comment: comment, spamId: spamId })
-    .then((res) => res.body.newComment[0] as CommentData)
+    .then((res) => {
+      const newComment = res.body.newComment?.[0]
+      if (!newComment) {
+        throw new Error('API response did not include the new comment.')
+      }
+      return newComment as CommentData
+    })
     .catch(logError)
 }

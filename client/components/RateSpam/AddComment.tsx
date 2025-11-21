@@ -20,8 +20,14 @@ export default function AddComment() {
     if (!comment.trim()) return
 
     const token = await getAccessTokenSilently()
-    addCommentMutation.mutate({ comment, spamId, token })
-    setComment('')
+    addCommentMutation.mutate(
+      { comment, spamId, token },
+      {
+        onSuccess: () => {
+          setComment('')
+        },
+      },
+    )
   }
   return (
     <>
@@ -33,9 +39,15 @@ export default function AddComment() {
           id="add-comment"
           value={comment}
           onChange={handleChange}
+          disabled={addCommentMutation.isPending}
         />
-        <button type="submit">Add</button>
+        <button type="submit" disabled={addCommentMutation.isPending}>
+          {addCommentMutation.isPending ? 'Adding...' : 'Add'}
+        </button>
       </form>
+      {addCommentMutation.isError && (
+        <p style={{ color: 'red' }}>Error: Could not add comment.</p>
+      )}
     </>
   )
 }

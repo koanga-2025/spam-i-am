@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getAllCommentsBySpamId, addComment } from '../apis/comments'
-import { AddComment } from '../../models/spam'
+import { AddComment, CommentData } from '../../models/spam'
 
 export function useComments(spamId: number) {
   return useQuery({
@@ -13,8 +13,13 @@ export function useAddComment() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (comment: AddComment) => addComment(comment),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['comments', variables.spamId] })
+    onSuccess: (newComment, variables) => {
+      queryClient.setQueryData(
+        ['comments', variables.spamId],
+        (oldData: CommentData[] | undefined) => {
+          return oldData ? [...oldData, newComment] : [newComment]
+        },
+      )
     },
   })
 }
